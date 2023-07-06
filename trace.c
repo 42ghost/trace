@@ -1,4 +1,5 @@
 #include "trace.h"
+#include "syscall_list.h"
 
 #include <stdio.h>
 
@@ -25,7 +26,7 @@ int trace(pid_t child)
         
         // gets system call number
         num_of_sc = ptrace(PTRACE_PEEKUSER, child, sizeof(long) * ORIG_RAX);
-        printf("%d\t", num_of_sc);
+        printf("%s\t", SYSCALL_LIST[num_of_sc]);
         
         ptrace(PTRACE_SYSCALL, child, 0, 0);
         waitpid(child, &status, 0);
